@@ -19,7 +19,12 @@ async function getServerInformation(): Promise<void> {
     }
 
     try{
-        const response = await fetch(`https://api.mcsrvstat.us/3/${serverAdressName}`);
+        const response = await fetch(`https://api.mcsrvstat.us/3/${serverAdressName}`, {
+            headers: {
+                'User-Agent': 'MinecraftStatusFrontend/1.0'
+            }
+        });
+
 
         if(!response.ok){
             throw new Error(`Error fetching server information. ${response.status}`);
@@ -38,6 +43,7 @@ async function getServerInformation(): Promise<void> {
             userElement.textContent = `0 / 0`;
             statusIcon.src="./img/connectionempty.png";
             motdElement.textContent = `Cannot reach server...`;
+            serverIcon.src="./img/default.svg";
         }else{
             const playersOnline = data.players.online;
             const playersMax = data.players.max;
