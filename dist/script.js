@@ -1,6 +1,7 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", () => {
     getServerInformation();
+    isFirst = false;
 });
 const serverNameElement = document.getElementById("serverName");
 const serverAdressElement = document.getElementById("serverAdress");
@@ -8,8 +9,14 @@ const userElement = document.getElementById("serverOnlineUsers");
 const statusIcon = document.getElementById("serverStatus");
 const serverIcon = document.getElementById("serverImage");
 const motdElement = document.getElementById("serverMotd");
-const serverAdressName = "Hypixel.net";
+document.getElementById("changeServerButton")?.addEventListener("click", getServerInformation);
+const serverNameInputField = document.getElementById("serverNameInput");
+let isFirst = true;
+let serverAdressName = "Hypixel.net";
 async function getServerInformation() {
+    if (!isFirst) {
+        serverAdressName = serverNameInputField.value;
+    }
     try {
         const response = await fetch(`https://api.mcsrvstat.us/3/${serverAdressName}`);
         if (!response.ok) {
@@ -34,6 +41,7 @@ async function getServerInformation() {
             serverNameElement.textContent = splitAdress[0];
             serverAdressElement.textContent = `.` + splitAdress[1];
             userElement.textContent = `${playersOnline} / ${playersMax}`;
+            statusIcon.src = "./img/connectionfull.png";
             motdElement.innerHTML = `${motd}`;
         }
     }
