@@ -17,6 +17,12 @@ async function getServerInformation(): Promise<void> {
     if(!isFirst) {
         serverAdressName = serverNameInputField.value;
     }
+    const splitAdress = serverAdressName.split(".");
+    serverNameElement.textContent = splitAdress[0];
+    serverAdressElement.textContent = `.` + splitAdress[1];
+    userElement.textContent = `0 / 0`;
+    statusIcon.src="./img/connectionempty.png";
+    motdElement.textContent = `Loading...`;
 
     try{
         const response = await fetch(`https://api.mcsrvstat.us/3/${serverAdressName}`, {
@@ -29,14 +35,9 @@ async function getServerInformation(): Promise<void> {
         if(!response.ok){
             throw new Error(`Error fetching server information. ${response.status}`);
         }
-        const splitAdress = serverAdressName.split(".");
 
-        serverNameElement.textContent = splitAdress[0];
-        serverAdressElement.textContent = `.` + splitAdress[1];
-        userElement.textContent = `0 / 0`;
-        statusIcon.src="./img/connectionempty.png";
-        motdElement.textContent = `Loading...`;
         const data = await response.json();
+
         if(!data.online){
             serverNameElement.textContent = splitAdress[0];
             serverAdressElement.textContent = `.` + splitAdress[1];
@@ -50,6 +51,8 @@ async function getServerInformation(): Promise<void> {
             const motd = data.motd.html.join("<br>");
             if(data.icon){
                 serverIcon.src = data.icon;
+            }else{
+                serverIcon.src = "./img/default.svg";
             }
             serverNameElement.textContent = splitAdress[0];
             serverAdressElement.textContent = `.` + splitAdress[1];
