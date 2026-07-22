@@ -22,8 +22,13 @@ async function getServerInformation() {
         if (!response.ok) {
             throw new Error(`Error fetching server information. ${response.status}`);
         }
-        const data = await response.json();
         const splitAdress = serverAdressName.split(".");
+        serverNameElement.textContent = splitAdress[0];
+        serverAdressElement.textContent = `.` + splitAdress[1];
+        userElement.textContent = `0 / 0`;
+        statusIcon.src = "./img/connectionempty.png";
+        motdElement.textContent = `Loading...`;
+        const data = await response.json();
         if (!data.online) {
             serverNameElement.textContent = splitAdress[0];
             serverAdressElement.textContent = `.` + splitAdress[1];
