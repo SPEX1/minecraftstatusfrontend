@@ -12,3 +12,5 @@ What it shows:
 #
 ![site preview](img/previewwidgetnew.png)
 #
+![site preview](img/previewoffline.png)
+#
