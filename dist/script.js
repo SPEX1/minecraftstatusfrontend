@@ -24,11 +24,7 @@ async function getServerInformation() {
     statusIcon.src = "./img/connectionempty.png";
     motdElement.textContent = `Loading...`;
     try {
-        const response = await fetch(`https://api.mcsrvstat.us/3/${serverAdressName}`, {
-            headers: {
-                'User-Agent': 'MinecraftStatusFrontend/1.0'
-            }
-        });
+        const response = await fetch(`https://api.mcsrvstat.us/3/${serverAdressName}`);
         if (!response.ok) {
             throw new Error(`Error fetching server information. ${response.status}`);
         }

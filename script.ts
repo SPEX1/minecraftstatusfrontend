@@ -25,11 +25,7 @@ async function getServerInformation(): Promise<void> {
     motdElement.textContent = `Loading...`;
 
     try{
-        const response = await fetch(`https://api.mcsrvstat.us/3/${serverAdressName}`, {
-            headers: {
-                'User-Agent': 'MinecraftStatusFrontend/1.0'
-            }
-        });
+        const response = await fetch(`https://api.mcsrvstat.us/3/${serverAdressName}`);
 
 
         if(!response.ok){
